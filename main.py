@@ -27,7 +27,7 @@ prompt = """
 
 # 2. 调用模型（启用 Google 联网搜索支持）
 response = client.models.generate_content(
-    model="gemini-2.5-flash",
+    model="gemini-3.8-flash",
     contents=prompt,
     config=types.GenerateContentConfig(
         tools=[{"google_search": {}}],  # 开启联网检索
