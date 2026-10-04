@@ -1,1 +1,2 @@
 google-genai>=0.1.0
+ddgs>=1.0.0
