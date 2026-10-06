@@ -44,10 +44,10 @@ def generate_briefing_data():
     print(f"已获取到一手素材，开始调用 Gemini 进行结构化提炼...")
 
     prompt = f"""
-以下是刚刚从权威外媒（如 WSJ, NYT, Reuters, Bloomberg, AP 等）抓取到的最新新闻线索：
+以下是刚刚通过实时热点 RSS 从权威外媒（如 WSJ, NYT, Reuters, Bloomberg, AP 等）抓取到的最新一手新闻素材：
 {raw_news}
 
-请根据以上一手素材，整理一份高质量的每日晨报。必须严格按照如下 JSON 结构输出：
+请基于以上素材，严格聚焦【过去24小时内】发生的重大新闻事件，整理一份高质量的每日晨报。必须严格按照如下 JSON 结构输出：
 
 {{
   "domestic_news": [
@@ -80,11 +80,9 @@ def generate_briefing_data():
 3. 仅输出合法的 JSON 对象，不输出任何额外解释或 Markdown 标记。
 """
 
-    # 针对 Google 503 偶尔突发繁忙，加入自动重试保护机制 (最多尝试 3 次)
     models_to_try = ["gemini-3.5-flash", "gemini-3.5-flash-lite"]
     
     for attempt in range(1, 4):
-        # 如果主力模型繁忙，自动尝试备用轻量模型
         current_model = models_to_try[0] if attempt <= 2 else models_to_try[1]
         try:
             print(f"第 {attempt} 次尝试请求模型 [{current_model}]...")
@@ -292,7 +290,7 @@ def send_email(subject, data):
     msg["To"] = formataddr(("收件人", receiver))
     msg["Subject"] = Header(subject, "utf-8")
 
-    print(f"正在通过 QQ 邮箱发送美化晨报至 {receiver} ...")
+    print("正在通过 QQ 邮箱发送美化晨报...")
     with smtplib.SMTP_SSL("smtp.qq.com", 465) as server:
         server.login(sender, auth_code)
         server.sendmail(sender, [receiver], msg.as_string())
