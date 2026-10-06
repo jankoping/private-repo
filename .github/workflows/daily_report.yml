@@ -2,9 +2,9 @@ name: Daily Morning Report
 
 on:
   schedule:
-    # 每天北京时间早上 9:47 (UTC 01:47) 自动触发
-    - cron: '47 1 * * *'
-  workflow_dispatch: # 依然保留随时手动点击测试的按钮
+    # 每天北京时间早上 10:00 (UTC 02:00) 自动触发作为双重保底
+    - cron: '0 2 * * *'
+  workflow_dispatch: # 支持外部 Webhook 及网页手动点击运行
 
 jobs:
   run-report:
