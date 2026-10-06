@@ -1,7 +1,7 @@
 name: Daily Morning Report
 
 on:
-   schedule:
+  schedule:
     # 每天北京时间早上 9:47 (UTC 01:47) 自动触发
     - cron: '47 1 * * *'
   workflow_dispatch: # 依然保留随时手动点击测试的按钮
